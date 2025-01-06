@@ -1,6 +1,9 @@
 # Set the working directory to where your dataset is located
 setwd("C:/Users/SourceCode/Downloads")
 
+# Set the working directory to where your dataset is located
+setwd("C:/Users/SourceCode/Downloads")
+
 # Load the necessary libraries
 library(ggplot2)
 library(dplyr)
@@ -17,7 +20,6 @@ beer_data$BeerConsumption <- as.numeric(gsub(",", ".", beer_data$BeerConsumption
 
 # Remove rows with any NA values to ensure clean data for analysis
 beer_data <- na.omit(beer_data)
-
 # Creating the Histogram for Average Temperature
 ggplot(beer_data, aes(x = AverageTemperature)) +
   geom_histogram(bins = 30, fill = "skyblue", color = "black") +
