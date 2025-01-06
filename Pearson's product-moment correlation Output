@@ -1,0 +1,41 @@
+> # Load the data
+> beer_data <- read.csv("Consumo_cerveja.csv", stringsAsFactors = FALSE, dec = ".", header = TRUE)
+> # Rename columns for easier reference
+> names(beer_data) <- c("Date", "AverageTemperature", "MinTemperature", "MaxTemperature", "Precipitation", "Weekend", "BeerConsumption")
+> # Convert data types
+> beer_data$AverageTemperature <- as.numeric(gsub(",", ".", beer_data$AverageTemperature))
+> beer_data$BeerConsumption <- as.numeric(gsub(",", ".", beer_data$BeerConsumption))
+> # Remove rows with NA values
+> beer_data <- na.omit(beer_data)
+> # Load ggplot2
+> library(ggplot2)
+> # Histogram for Average Temperature
+> ggplot(beer_data, aes(x = AverageTemperature)) +
++   geom_histogram(bins = 30, fill = "skyblue", color = "black") +
++   labs(title = "Distribution of Average Temperature",
++        x = "Average Temperature (°C)",
++        y = "Frequency") +
++   theme_minimal()
+> # Scatter Plot for Beer Consumption vs. Average Temperature
+> ggplot(beer_data, aes(x = AverageTemperature, y = BeerConsumption)) +
++   geom_point() +
++   geom_smooth(method = "lm", se = FALSE, color = "red") +
++   labs(title = "Beer Consumption vs. Average Temperature",
++        x = "Average Temperature (°C)",
++        y = "Beer Consumption (liters)") +
++   theme_minimal()
+`geom_smooth()` using formula = 'y ~ x'
+> # Pearson's correlation coefficient
+> correlation_test <- cor.test(beer_data$AverageTemperature, beer_data$BeerConsumption, method = "pearson")
+> print(correlation_test)
+
+	Pearson's product-moment correlation
+
+data:  beer_data$AverageTemperature and beer_data$BeerConsumption
+t = 13.377, df = 363, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.5015477 0.6395422
+sample estimates:
+      cor 
+0.5746147 
